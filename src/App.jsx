@@ -8,7 +8,7 @@ function App() {
       <div className="first w-20 md:w-[30%] ">
         <NavBar />
       </div>
-      <div className="second md:[60%] mt-4 border border-x-gray-600 border-y-black space-y-10">
+      <div className="second md:w-3/4 mt-4 border border-x-gray-600 border-y-black space-y-10">
         <Outlet />
       </div>
       <div className="third md:w-[40%]  hidden md:block">

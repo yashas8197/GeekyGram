@@ -1,6 +1,30 @@
+import Post from "../components/Post/Post";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchPosts } from "../utils/postSlice";
+import { fetchUsers } from "../utils/userSlice";
+
 const Home = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+  const { error, posts, status } = useSelector((post) => post.posts);
+  const user = useSelector((state) => state.users.usersList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPosts());
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const userFollowing = (
+    user?.find((u) => u.username === "Katherine")?.following || []
+  ).map((u) => u.username);
+
+  const filteredUsers = posts.filter((post) =>
+    userFollowing.includes(post.username)
+  );
+
+  console.log(posts);
   return (
-    <div className="second md:[60%] mt-4 border border-x-gray-600 border-y-black space-y-10">
+    <div className="second space-y-10">
       <div className="whatishapp flex gap-4">
         <div className="img m-2 w-16">
           <img
@@ -24,96 +48,9 @@ const Home = () => {
         </div>
       </div>
       <div className="posts">
-        <div className="post border-[1px] border-y-gray-600 border-x-0">
-          <div className="flex">
-            <div className="image my-4 ml-2 w-16 min-w-[4rem]">
-              <img
-                className="w-12 h-12 rounded-full object-cover "
-                src="https://res.cloudinary.com/darwtgzlk/image/upload/w_400,f_auto,q_auto/v1686251367/socialMedia/profilePictures/user1_wla0x2.jpg"
-              />
-            </div>
-
-            <div className="content my-3">
-              <span className="font-bold hover:underline cursor-pointer text-white">
-                non aesthetic things
-              </span>
-              <span className="text-gray-500 hidden sm:inline">
-                {" "}
-                @yashas8197 . 6h
-              </span>
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dolores, sequi.
-              </div>
-              <div className="posting md:w-[50%] m-4 ml-0 ">
-                <img
-                  className="rounded-2xl"
-                  src="https://res.cloudinary.com/dlrlwy7hg/image/upload/v1726733659/renp50qybauf6flkjels.jpg"
-                />
-              </div>
-
-              <div className="icons flex justify-around md:w-[50%] text-gray-700">
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-chat"></i> 1k
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-heart"></i> 1k
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-share"></i>
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-bookmark"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="post border-[1px] border-y-gray-600 border-x-0">
-          <div className="flex">
-            <div className="image my-4 ml-2 w-16 min-w-[4rem]">
-              <img
-                className="w-12 h-12 rounded-full object-cover "
-                src="https://res.cloudinary.com/darwtgzlk/image/upload/w_400,f_auto,q_auto/v1686251367/socialMedia/profilePictures/user1_wla0x2.jpg"
-              />
-            </div>
-
-            <div className="content my-3">
-              <span className="font-bold hover:underline cursor-pointer text-white">
-                non aesthetic things
-              </span>
-              <span className="text-gray-500 hidden sm:inline">
-                {" "}
-                @yashas8197 . 6h
-              </span>
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dolores, sequi.
-              </div>
-              <div className="posting md:w-[50%] m-4 ml-0 ">
-                <img
-                  className="rounded-2xl"
-                  src="https://res.cloudinary.com/dlrlwy7hg/image/upload/v1726733659/renp50qybauf6flkjels.jpg"
-                />
-              </div>
-
-              <div className="icons flex justify-around md:w-[50%] text-gray-700">
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-chat"></i> 1k
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-heart"></i> 1k
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-share"></i>
-                </div>
-                <div className="icon flex items-center justify-center">
-                  <i className="bi bi-bookmark"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {posts.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
       </div>
     </div>
   );

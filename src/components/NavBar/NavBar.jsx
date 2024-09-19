@@ -4,15 +4,17 @@ const NavBar = () => {
   const currentPath = location.pathname;
   return (
     <div className="sidebar flex md:items-end flex-col sticky top-0">
-      <div className="logo self-start md:mx-20 text-2xl my-4">
-        <p className="hidden md:block">GeekyGram</p>
+      <div className="logo self-start md:mx-28 text-2xl my-4">
+        <p className="hidden md:block">
+          Geeky<span className="text-[#39A7F2]">Gram</span>
+        </p>
         <i className="bi bi-twitter-x md:hidden ml-5"></i>
       </div>
       <ul className="flex flex-col text-2xl space-y-3 md:px-11 font-semibold">
         <li>
           <NavLink
             className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
-              currentPath === "/" ? "text-blue-500" : ""
+              currentPath === "/" ? "text-[#39A7F2]" : ""
             }`}
             to="/"
           >
@@ -23,7 +25,7 @@ const NavBar = () => {
         <li>
           <NavLink
             className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
-              currentPath === "/explore" ? "text-blue-500" : ""
+              currentPath === "/explore" ? "text-[#39A7F2]" : ""
             }`}
             to="/explore"
           >
@@ -34,7 +36,7 @@ const NavBar = () => {
         <li className="">
           <NavLink
             className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
-              currentPath === "/bookmark" ? "text-blue-500" : ""
+              currentPath === "/bookmark" ? "text-[#39A7F2]" : ""
             }`}
             to="/bookmark"
           >
@@ -45,9 +47,9 @@ const NavBar = () => {
         <li className="">
           <NavLink
             className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
-              currentPath === "/profile/yasha" ? "text-blue-500" : ""
+              currentPath === "/profile/Katherine" ? "text-[#39A7F2]" : ""
             }`}
-            to="/profile/yasha"
+            to="/profile/Katherine"
           >
             <i className="bi bi-person-circle"></i>
             <span className="hidden md:block">Profile</span>
