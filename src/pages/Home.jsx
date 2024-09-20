@@ -22,7 +22,7 @@ const Home = () => {
     userFollowing.includes(post.username)
   );
 
-  console.log(posts);
+  // console.log(posts);
   return (
     <div className="second space-y-10">
       <div className="whatishapp flex gap-4">

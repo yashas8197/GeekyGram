@@ -37,6 +37,8 @@ export const commentPost = createAsyncThunk(
       dataToUpdate
     );
 
+    console.log(response.data);
+
     return response.data;
   }
 );
@@ -114,6 +116,34 @@ const postSlice = createSlice({
     setPost: (state, action) => {
       state.editPost = action.payload;
     },
+    likeThePost: (state, action) => {
+      const { postId, username } = action.payload;
+      state.posts = state.posts.map((post) => {
+        if (post._id === postId) {
+          const hasLiked = post.likes.likedBy.findIndex(
+            (user) => user.username === username
+          );
+          if (hasLiked !== -1) {
+            return {
+              ...post,
+              likes: {
+                likeCount: post.likes.likeCount - 1,
+                likedBy: post.likes.likedBy.filter((user) => user !== username),
+              },
+            };
+          } else {
+            return {
+              ...post,
+              likes: {
+                likeCount: post.likes.likeCount + 1,
+                likedBy: [...post.likes.likedBy, username],
+              },
+            };
+          }
+        }
+        return post;
+      });
+    },
   },
   extraReducers: (builder) => {
     const handlePending = (state) => {
@@ -161,6 +191,26 @@ const postSlice = createSlice({
     });
     builder.addCase(createPost.rejected, handleRejected);
 
+    builder.addCase(likePost.pending, handlePending);
+    builder.addCase(likePost.fulfilled, (state, action) => {
+      handleFulfilled(state);
+      const updatedPost = action.payload;
+      state.posts = state.posts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+    });
+    builder.addCase(likePost.rejected, handleRejected);
+
+    builder.addCase(commentPost.pending, handlePending);
+    builder.addCase(commentPost.fulfilled, (state, action) => {
+      handleFulfilled(state);
+      const updatedPost = action.payload;
+      state.posts = state.posts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+    });
+    builder.addCase(commentPost.rejected, handleRejected);
+
     builder.addCase(editPostApi.pending, handlePending);
     builder.addCase(editPostApi.fulfilled, (state, action) => {
       handleFulfilled(state);
@@ -191,6 +241,7 @@ const postSlice = createSlice({
   },
 });
 
-export const { resetCurrentPost, setPost, editedPost } = postSlice.actions;
+export const { resetCurrentPost, setPost, editedPost, likeThePost } =
+  postSlice.actions;
 
 export default postSlice.reducer;

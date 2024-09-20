@@ -8,7 +8,10 @@ const NavBar = () => {
         <p className="hidden md:block">
           Geeky<span className="text-[#39A7F2]">Gram</span>
         </p>
-        <i className="bi bi-twitter-x md:hidden ml-5"></i>
+        <img
+          src="https://res.cloudinary.com/dlrlwy7hg/image/upload/v1726772153/geekygram-logo_sqkmof.png"
+          className=" md:hidden"
+        />
       </div>
       <ul className="flex flex-col text-2xl space-y-3 md:px-11 font-semibold">
         <li>
