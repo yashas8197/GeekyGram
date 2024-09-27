@@ -43,9 +43,12 @@ const Profile = () => {
           src={user?.avatarURL}
         />
         {isOwnProfile ? (
-          <Button variant="secondary" onClick={handleOpenDialog}>
+          <button
+            className="border-none rounded-3xl bg-slate-200 text-black text-base font-extrabold py-2 px-5"
+            onClick={handleOpenDialog}
+          >
             Edit Profile
-          </Button>
+          </button>
         ) : !ownerUserData.following?.find(
             (user) => user.username === username
           ) ? (
@@ -93,6 +96,8 @@ const Profile = () => {
       <EditProfile
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
+        user={user}
+        currentUser={user.username}
       />
     </div>
   );
