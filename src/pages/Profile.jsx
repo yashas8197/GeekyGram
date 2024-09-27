@@ -1,3 +1,4 @@
+import EditProfile from "@/components/EditProfile/EditProfile";
 import Post from "@/components/Post/Post";
 import { Button } from "@/components/ui/button";
 import { fetchPosts } from "@/utils/postSlice";
@@ -9,6 +10,7 @@ import { useParams } from "react-router-dom";
 const Profile = () => {
   const { username } = useParams();
   const dispatch = useDispatch();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { posts } = useSelector((post) => post.posts);
 
@@ -29,6 +31,10 @@ const Profile = () => {
 
   if (!user) return;
 
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
   return (
     <div>
       <div className="profileDetails flex items-center justify-between mb-4 p-4 container">
@@ -37,7 +43,9 @@ const Profile = () => {
           src={user?.avatarURL}
         />
         {isOwnProfile ? (
-          <Button variant="secondary">Edit Profile</Button>
+          <Button variant="secondary" onClick={handleOpenDialog}>
+            Edit Profile
+          </Button>
         ) : !ownerUserData.following?.find(
             (user) => user.username === username
           ) ? (
@@ -81,6 +89,11 @@ const Profile = () => {
       {usersPosts.map((post) => (
         <Post key={post._id} post={post} />
       ))}
+
+      <EditProfile
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </div>
   );
 };

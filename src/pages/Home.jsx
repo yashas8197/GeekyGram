@@ -48,7 +48,7 @@ const Home = () => {
         </div>
       </div>
       <div className="posts">
-        {posts.map((post) => (
+        {filteredUsers.map((post) => (
           <Post key={post._id} post={post} />
         ))}
       </div>

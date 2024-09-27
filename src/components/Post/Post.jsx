@@ -119,7 +119,6 @@ const Post = ({ post }) => {
                   <video
                     className="w-full rounded-lg object-cover"
                     controls
-                    autoPlay
                     muted
                     loop
                   >

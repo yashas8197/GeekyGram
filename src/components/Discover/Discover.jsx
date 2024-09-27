@@ -1,12 +1,37 @@
-const Discover = ({ whoToFollow }) => {
+import { fetchUsers } from "@/utils/userSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+const Discover = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+  const { usersList, ownerUserData, loading } = useSelector(
+    (state) => state.users
+  );
+
+  const whoToFollow = ownerUserData
+    ? usersList?.filter(
+        (user) =>
+          user.username !== "Katherine" &&
+          !ownerUserData.following.some(
+            (following) => following.username === user.username
+          )
+      )
+    : [];
   return (
-    <div className="who sticky top-0 m-3 bg-[#16181c] w-3/4 py-5 rounded-xl space-y-1">
+    <div className="who sticky top-0 m-3 bg-[#16181c] xl:w-3/4 w-full py-5 rounded-xl space-y-1 ">
       <h1 className="text-xl font-bold px-3">Who to follow?</h1>
       {whoToFollow?.length ? (
         whoToFollow?.map((user) => (
           <div
             key={user._id}
-            className="item py-1 px-6 flex items-center hover:bg-gray-600 justify-between cursor-pointer"
+            className="item discover flex-wrap py-1 px-6 flex items-center hover:bg-gray-600 justify-between cursor-pointer"
+            onClick={() => navigate(`/profile/${user.username}`)}
           >
             <div className="p1 mr-2">
               <img
@@ -16,7 +41,7 @@ const Discover = ({ whoToFollow }) => {
               />
             </div>
             <div className="p2">
-              <p className="font-semibold">
+              <p className="ont-semibold text-base sm:text-xs md:text-sm">
                 {user.firstName} {user.lastName}
               </p>
               <p className="text-gray-500">@{user.username}</p>

@@ -1,70 +1,71 @@
 import { NavLink, useLocation } from "react-router-dom";
+
 const NavBar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+
   return (
-    <div className="sidebar flex md:items-end flex-col sticky top-0">
-      <div className="logo self-start md:mx-28 text-2xl my-4">
-        <p className="hidden md:block">
-          Geeky<span className="text-[#39A7F2]">Gram</span>
+    <div className="">
+      <div className="logo text-2xl my-4">
+        <p className="hidden xl:block ">
+          Geeky<span className="text-[#39A7F2] ">Gram</span>
         </p>
-        <img
-          src="https://res.cloudinary.com/dlrlwy7hg/image/upload/v1726772153/geekygram-logo_sqkmof.png"
-          className=" md:hidden"
-        />
       </div>
-      <ul className="flex flex-col text-2xl space-y-3 md:px-11 font-semibold">
-        <li>
+      <ul className="flex md:flex-col sm:justify-start justify-around  text-2xl space-y-3 font-semibold bg-black md:space-y-2 md:static fixed bottom-0 left-0 right-0">
+        <li className="">
           <NavLink
-            className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
               currentPath === "/" ? "text-[#39A7F2]" : ""
             }`}
             to="/"
           >
             <i className="bi bi-house-fill"></i>
-            <span className="hidden md:block">Home</span>
+            <span className="hidden xl:block">Home</span>
           </NavLink>
         </li>
-        <li>
+        <li className="">
           <NavLink
-            className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
               currentPath === "/explore" ? "text-[#39A7F2]" : ""
             }`}
             to="/explore"
           >
             <i className="bi bi-search"></i>
-            <span className="hidden md:block">Explore</span>
+            <span className="hidden xl:block">Explore</span>
           </NavLink>
         </li>
         <li className="">
           <NavLink
-            className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
               currentPath === "/bookmark" ? "text-[#39A7F2]" : ""
             }`}
             to="/bookmark"
           >
             <i className="bi bi-bookmark-fill"></i>
-            <span className="hidden md:block">Bookmark</span>
+            <span className="hidden xl:block">Bookmark</span>
           </NavLink>
         </li>
         <li className="">
           <NavLink
-            className={`flex md:justify-start items-center gap-3 justify-center  md:w-fit hover:bg-gray-900 hover:cursor-pointer px-5 py-3 hover:rounded-full cursor-pointer ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
               currentPath === "/profile/Katherine" ? "text-[#39A7F2]" : ""
             }`}
             to="/profile/Katherine"
           >
             <i className="bi bi-person-circle"></i>
-            <span className="hidden md:block">Profile</span>
+            <span className="hidden xl:block">Profile</span>
           </NavLink>
         </li>
-        <li>
-          <div className="post w-full text-center my-4">
-            <button className="hidden md:block bg-[#39A7F2] px-16 text-xl rounded-full py-3 text-white">
+        <li className="hidden md:block lg:block xl:hidden">
+          <button className="bg-[#39A7F2] px-4 m-2 text-xl rounded-full py-3 text-white">
+            <i className="bi bi-feather"></i>
+          </button>
+        </li>
+
+        <li className="hidden xl:block">
+          <div className="post w-full text-center">
+            <button className="bg-[#39A7F2] px-16 text-xl rounded-full sm:py-3 text-white">
               <i className="bi bi-feather mr-2"></i>Post
-            </button>
-            <button className="md:hidden bg-[#39A7F2] px-4 text-xl rounded-full py-3 text-white">
-              <i className="bi bi-feather"></i>
             </button>
           </div>
         </li>
