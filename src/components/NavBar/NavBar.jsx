@@ -11,10 +11,10 @@ const NavBar = () => {
           Geeky<span className="text-[#39A7F2] ">Gram</span>
         </p>
       </div>
-      <ul className="flex md:flex-col sm:justify-start justify-around  text-2xl space-y-3 font-semibold bg-black md:space-y-2 md:static fixed bottom-0 left-0 right-0">
+      <ul className="flex md:flex-col sm:justify-start  justify-around  text-2xl space-y-3 font-semibold bg-black md:space-y-2 md:static fixed bottom-0 left-0 right-0">
         <li className="">
           <NavLink
-            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 pt-2 sm:py-3 hover:rounded-full ${
               currentPath === "/" ? "text-[#39A7F2]" : ""
             }`}
             to="/"
@@ -25,7 +25,7 @@ const NavBar = () => {
         </li>
         <li className="">
           <NavLink
-            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
+            className={`flex  items-center gap-3  hover:bg-gray-900 px-5 pb-2 sm:py-3 hover:rounded-full ${
               currentPath === "/explore" ? "text-[#39A7F2]" : ""
             }`}
             to="/explore"
@@ -36,7 +36,7 @@ const NavBar = () => {
         </li>
         <li className="">
           <NavLink
-            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
+            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 pb-2 sm:py-3 hover:rounded-full ${
               currentPath === "/bookmark" ? "text-[#39A7F2]" : ""
             }`}
             to="/bookmark"
@@ -47,7 +47,7 @@ const NavBar = () => {
         </li>
         <li className="">
           <NavLink
-            className={`flex  items-center gap-3 hover:bg-gray-900 px-5 sm:py-3 hover:rounded-full ${
+            className={`flex  items-center gap-3 hover:bg-gray-900  px-5 pb-2 sm:py-3 hover:rounded-full ${
               currentPath === "/profile/Katherine" ? "text-[#39A7F2]" : ""
             }`}
             to="/profile/Katherine"
