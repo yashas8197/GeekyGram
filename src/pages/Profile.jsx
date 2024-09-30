@@ -1,7 +1,9 @@
 import EditProfile from "@/components/EditProfile/EditProfile";
+import FollowDialog from "@/components/FollowDialog/FollowDialog";
 import Post from "@/components/Post/Post";
 import { Button } from "@/components/ui/button";
 import { fetchPosts } from "@/utils/postSlice";
+import useNotFollowingBack from "@/utils/useNotFollowingBack";
 import { fetchUserByUsername } from "@/utils/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,17 +13,25 @@ const Profile = () => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [clickedOn, setClickedOn] = useState("");
+  const [isFollowDialogOpen, setIsFollowDialogOpen] = useState(false);
+  const [notFollowBack, setNotFollowBack] = useState([]);
 
-  const { posts } = useSelector((post) => post.posts);
+  const { posts, status } = useSelector((post) => post.posts);
 
   useEffect(() => {
     dispatch(fetchUserByUsername(username));
     dispatch(fetchPosts());
   }, [dispatch, username]);
 
-  const { user, ownerUserData, status, error } = useSelector(
-    (state) => state.users
-  );
+  const { user, ownerUserData, error } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (user) {
+      const result = useNotFollowingBack(user);
+      setNotFollowBack(result);
+    }
+  }, [user]);
 
   const isOwnProfile = username === ownerUserData.username;
 
@@ -29,10 +39,17 @@ const Profile = () => {
 
   const usersPosts = posts.filter((post) => post.username === username);
 
+  // console.log(usersPosts);
+
   if (!user) return;
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
+  };
+
+  const handleFollowDialog = (dialogClick) => {
+    setClickedOn(dialogClick);
+    setIsFollowDialogOpen(true);
   };
 
   return (
@@ -80,24 +97,44 @@ const Profile = () => {
           {usersPosts.length}
           <span className="font-normal ml-1 text-gray-500">Posts</span>
         </p>
-        <p className="mr-4 cursor-pointer font-bold">
+        <p
+          className="mr-4 cursor-pointer font-bold"
+          onClick={() => handleFollowDialog("following")}
+        >
           {user.following.length}
           <span className="font-normal ml-1 text-gray-500">Following</span>
         </p>
-        <p className="mr-4 cursor-pointer font-bold">
+        <p
+          className="mr-4 cursor-pointer font-bold"
+          onClick={() => handleFollowDialog("followers")}
+        >
           {user.followers.length}
           <span className="font-normal ml-1 text-gray-500">Followers</span>
         </p>
       </div>
-      {usersPosts.map((post) => (
-        <Post key={post._id} post={post} />
-      ))}
+      {status !== "loading" ? (
+        usersPosts.map((post) => (
+          <div key={post._id}>
+            <Post post={post} />
+          </div>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
 
       <EditProfile
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
         user={user}
         currentUser={user.username}
+      />
+      <FollowDialog
+        setIsFollowDialogOpen={setIsFollowDialogOpen}
+        isFollowDialogOpen={isFollowDialogOpen}
+        clickedOn={clickedOn}
+        currentUser={user.username}
+        user={user}
+        notFollowBack={notFollowBack}
       />
     </div>
   );

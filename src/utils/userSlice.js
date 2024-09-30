@@ -47,7 +47,6 @@ export const unFollowUser = createAsyncThunk(
       `https://quack-be.vercel.app/api/v1/unfollow/${userId}/${followId}`
     );
 
-    console.log(response.data);
     return response.data;
   }
 );
@@ -60,6 +59,7 @@ export const updateUserProfile = createAsyncThunk(
       dataToUpdate
     );
 
+    console.log(response.data);
     return response.data;
   }
 );
@@ -160,7 +160,9 @@ const userSlice = createSlice({
     });
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
       state.status = "fulfilled";
+
       const userUpdate = action.payload.user;
+      console.log(userUpdate);
       state.user = userUpdate;
     });
     builder.addCase(updateUserProfile.rejected, (state, action) => {
@@ -176,6 +178,27 @@ const userSlice = createSlice({
       state.usersList = action.payload.users;
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
+      state.status = "rejected";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(unFollowUser.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(unFollowUser.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      const updatedUser = action.payload.user;
+      const userIndex = state.usersList.findIndex(
+        (user) => user._id === updatedUser._id
+      );
+      if (userIndex !== -1) {
+        state.usersList[userIndex] = updatedUser;
+      }
+      if (state.user && state.user._id === updatedUser._id) {
+        state.user = updatedUser;
+      }
+    });
+    builder.addCase(unFollowUser.rejected, (state, action) => {
       state.status = "rejected";
       state.error = action.error.message;
     });

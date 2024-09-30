@@ -80,8 +80,6 @@ export const editPostApi = createAsyncThunk(
 export const editPostAvatar = createAsyncThunk(
   "posts/editPostAvatar",
   async ({ username, dataToUpdate }) => {
-    console.log(username);
-    console.log(dataToUpdate);
     const response = await axios.post(
       `https://quack-be.vercel.app/api/post/edit/${username}`,
       dataToUpdate
@@ -234,7 +232,7 @@ const postSlice = createSlice({
       handleFulfilled(state);
       const updatedPost = action.payload.post;
       state.posts = state.posts.map((post) =>
-        post.username === updatedPost.username ? updatedPost : post
+        post._id === updatedPost._id ? updatedPost : post
       );
     });
     builder.addCase(editPostAvatar.rejected, handleRejected);

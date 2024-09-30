@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PostToolBar from "../PostToolBar/PostToolBar";
 
 const Post = ({ post }) => {
   const [showComment, setShowComment] = useState(false);
@@ -101,6 +102,11 @@ const Post = ({ post }) => {
             </span>
             <p className="md:max-w-2xl">{post.content}</p>
           </div>
+          {post.username === ownerUserData.username && (
+            <div className="post-toolbar flex-grow relative text-right">
+              <PostToolBar post={post} />
+            </div>
+          )}
         </div>
         <div className="inline">
           <div

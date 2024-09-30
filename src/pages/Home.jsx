@@ -21,8 +21,9 @@ const Home = () => {
   const filteredUsers = posts.filter((post) =>
     userFollowing.includes(post.username)
   );
-
   // console.log(posts);
+
+  // console.log(filteredUsers);
   return (
     <div className="second space-y-10">
       <div className="whatishapp flex gap-4">
@@ -48,9 +49,13 @@ const Home = () => {
         </div>
       </div>
       <div className="posts">
-        {filteredUsers.map((post) => (
-          <Post key={post._id} post={post} />
-        ))}
+        {filteredUsers.length !== 0 ? (
+          filteredUsers.map((post) => <Post key={post._id} post={post} />)
+        ) : (
+          <p className="text-center text-gray-500 font-semibold">
+            Your feed is empty. Follow people to fill it up!
+          </p>
+        )}
       </div>
     </div>
   );

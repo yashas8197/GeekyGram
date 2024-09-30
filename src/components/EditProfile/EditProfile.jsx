@@ -22,24 +22,30 @@ const EditProfile = ({ isDialogOpen, setIsDialogOpen, user }) => {
   const [profileAvatar, setProfileAvatar] = useState(user?.avatarURL);
   const [profileBio, setProfileBio] = useState(user?.bio);
   const [profileWebsite, setProfileWebsite] = useState(user?.website);
+  const [clickedOn, setClickedOn] = useState("");
   const dispatch = useDispatch();
 
-  const saveProfile = () => {
+  const saveProfile = async () => {
     const dataToUpdate = {
       bio: profileBio,
       website: profileWebsite,
       avatarURL: profileAvatar,
     };
-    dispatch(updateUserProfile({ userId: user._id, dataToUpdate }));
+    try {
+      dispatch(updateUserProfile({ userId: user._id, dataToUpdate }));
 
-    const postDataToUpdate = { avatarURL: profileAvatar };
-    dispatch(
-      editPostAvatar({
-        username: user.username,
-        dataToUpdate: postDataToUpdate,
-      })
-    );
-    setIsDialogOpen(false);
+      const postDataToUpdate = { avatarURL: profileAvatar };
+      dispatch(
+        editPostAvatar({
+          username: user.username,
+          dataToUpdate: postDataToUpdate,
+        })
+      );
+
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
   };
 
   const handleUpload = (url) => {

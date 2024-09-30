@@ -10,7 +10,7 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const { error, currentPost, status } = useSelector((post) => post.posts);
 
-  console.log(postId);
+  // console.log(postId);
 
   useEffect(() => {
     dispatch(resetCurrentPost());
@@ -19,7 +19,7 @@ const PostDetails = () => {
 
   if (currentPost === null) return null;
 
-  console.log(currentPost);
+  // console.log(currentPost);
 
   return (
     <div>

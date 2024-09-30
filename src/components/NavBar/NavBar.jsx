@@ -11,7 +11,7 @@ const NavBar = () => {
           Geeky<span className="text-[#39A7F2] ">Gram</span>
         </p>
       </div>
-      <ul className="flex md:flex-col sm:justify-start  justify-around  text-2xl space-y-3 font-semibold bg-black md:space-y-2 md:static fixed bottom-0 left-0 right-0">
+      <ul className="flex md:flex-col sm:justify-start  justify-around  text-2xl space-y-3 font-semibold md:space-y-2 md:static fixed bottom-0 left-0 right-0">
         <li className="">
           <NavLink
             className={`flex  items-center gap-3 hover:bg-gray-900 px-5 pt-2 sm:py-3 hover:rounded-full ${
