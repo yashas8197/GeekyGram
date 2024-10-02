@@ -27,7 +27,7 @@ export function EditPostDialog({ isDialogOpen, setIsDialogOpen }) {
     }
   }, []);
 
-  if (status === "loading" || !editPost) return;
+  // if (status === "loading" || !editPost) return;
   const handleUpload = (url) => {
     setMediaUrl(url);
     setType(url?.endsWith(".mp4") ? "video" : "image" || "");
@@ -44,6 +44,7 @@ export function EditPostDialog({ isDialogOpen, setIsDialogOpen }) {
     dispatch(setPost({}));
     setUpdatedContent("");
     setMediaUrl("");
+    setIsDialogOpen(false);
   };
 
   return (

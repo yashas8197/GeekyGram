@@ -27,7 +27,7 @@ const PostDetails = () => {
       {status === "error" && (
         <div className="alert alert-danger">Error: {error}</div>
       )}
-      {currentPost && <Post post={currentPost} />}
+      {currentPost && <Post postId={postId} />}
     </div>
   );
 };

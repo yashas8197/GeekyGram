@@ -10,20 +10,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PostToolBar from "../PostToolBar/PostToolBar";
 
-const Post = ({ post }) => {
-  const [showComment, setShowComment] = useState(false);
-  const [textComment, setTextComment] = useState("");
-  const [localComments, setLocalComments] = useState(post?.comments || []);
-  const [isMarked, setIsMarked] = useState(post?.isMarked);
+const Post = ({ postId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { ownerUserData, status, error } = useSelector((state) => state.users);
+
+  const { posts } = useSelector((state) => state.posts);
+
+  const post = posts.find((post) => post._id === postId);
+
+  const [showComment, setShowComment] = useState(false);
+  const [textComment, setTextComment] = useState("");
+  const [localComments, setLocalComments] = useState(post?.comments || []);
+  const [isMarked, setIsMarked] = useState(post?.isMarked);
+
   const handleProfileClick = (username) => {
     navigate(`/profile/${username}`);
   };
 
-  if (!post) return;
+  if (!postId) return;
 
   const copyToClipboard = async (postId) => {
     let link = window.location.origin + "/post-details/" + postId;

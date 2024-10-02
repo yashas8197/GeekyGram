@@ -60,7 +60,12 @@ export const createPost = createAsyncThunk(
   async ({ dataToUpload }) => {
     const response = await axios.post(
       `https://quack-be.vercel.app/api/v1/post`,
-      dataToUpload
+      dataToUpload,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   }
@@ -73,6 +78,7 @@ export const editPostApi = createAsyncThunk(
       `https://quack-be.vercel.app/api/v1/edit/${id}`,
       dataToUpdate
     );
+    console.log(response.data);
     return response.data;
   }
 );
@@ -212,12 +218,16 @@ const postSlice = createSlice({
     builder.addCase(editPostApi.pending, handlePending);
     builder.addCase(editPostApi.fulfilled, (state, action) => {
       handleFulfilled(state);
-      const updatedPost = action.payload.post;
-      state.editPost = updatedPost;
-      state.posts = state.posts.map((post) =>
-        post._id === updatedPost._id ? updatedPost : post
-      );
+      const updatedPost = action.payload?.post;
+
+      if (updatedPost) {
+        state.editPost = updatedPost;
+        state.posts = state.posts.map((post) =>
+          post._id === updatedPost._id ? { ...post, ...updatedPost } : post
+        );
+      }
     });
+
     builder.addCase(editPostApi.rejected, handleRejected);
 
     builder.addCase(deletePostApi.pending, handlePending);

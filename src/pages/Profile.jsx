@@ -115,7 +115,7 @@ const Profile = () => {
       {status !== "loading" ? (
         usersPosts.map((post) => (
           <div key={post._id}>
-            <Post post={post} />
+            <Post postId={post._id} />
           </div>
         ))
       ) : (
