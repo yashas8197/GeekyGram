@@ -168,7 +168,7 @@ const Post = ({ postId }) => {
             </div>
             <div
               className={`icon flex items-center justify-center ${
-                isMarked ? "text-[#39A7F2]" : "text-gray-400"
+                isMarked === true ? "text-[#39A7F2]" : "text-gray-400"
               } `}
               onClick={() => handleBookMark(post._id, post)}
             >

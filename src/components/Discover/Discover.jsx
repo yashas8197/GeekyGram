@@ -75,7 +75,7 @@ const Discover = () => {
     }
   };
   return (
-    <div className="who sticky top-0 m-3 bg-[#16181c] xl:w-3/4 w-full py-5 rounded-xl space-y-1">
+    <div className="who mt-6 sticky top-20 mx-3 bg-[#16181c] xl:w-3/4 w-full py-5 rounded-xl space-y-1">
       <h1 className="text-xl font-bold px-3">Who to follow?</h1>
       <div className=" overflow-y-auto" style={{ maxHeight: "400px" }}>
         {whoToFollow?.length ? (

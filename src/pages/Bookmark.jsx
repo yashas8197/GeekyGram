@@ -12,15 +12,16 @@ const Bookmark = () => {
   }, [dispatch]);
 
   const bookMarkedPosts = posts.filter((post) => post.isMarked === true);
+  console.log(bookMarkedPosts);
   return (
-    <div>
+    <div className="-mt-5">
       {bookMarkedPosts.length === 0 && (
         <p className="text-xl text-gray-500 text-center mt-32">
           You have not added any Bookmarks!
         </p>
       )}
       {bookMarkedPosts.map((bookmark) => (
-        <Post key={bookmark._id} post={bookmark} />
+        <Post key={bookmark._id} postId={bookmark._id} />
       ))}
     </div>
   );

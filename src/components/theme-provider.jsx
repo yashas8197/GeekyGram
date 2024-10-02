@@ -45,12 +45,12 @@ export function ThemeProvider({
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       {children}
-      <ThemeToggleButton /> {/* Include the theme toggle button here */}
+      {/* <ThemeToggleButton />  */}
     </ThemeProviderContext.Provider>
   );
 }
 
-const ThemeToggleButton = () => {
+/* const ThemeToggleButton = () => {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
@@ -69,7 +69,7 @@ const ThemeToggleButton = () => {
       {theme === "dark" ? "Light" : theme === "light" ? "System" : "Dark"} Mode
     </button>
   );
-};
+}; */
 
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext);

@@ -7,14 +7,16 @@ const Explore = () => {
   const dispatch = useDispatch();
   const { error, posts, status } = useSelector((post) => post.posts);
 
+  console.log(posts);
+
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
   return (
     <div>
-      <ul className="list-group">
+      <ul className="list-group -mt-5">
         {posts?.map((post) => (
-          <Post key={post._id} post={post} />
+          <Post key={post._id} postId={post._id} />
         ))}
       </ul>
     </div>

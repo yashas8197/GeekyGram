@@ -17,14 +17,16 @@ const Profile = () => {
   const [isFollowDialogOpen, setIsFollowDialogOpen] = useState(false);
   const [notFollowBack, setNotFollowBack] = useState([]);
 
-  const { posts, status } = useSelector((post) => post.posts);
+  const { posts } = useSelector((post) => post.posts);
 
   useEffect(() => {
     dispatch(fetchUserByUsername(username));
     dispatch(fetchPosts());
   }, [dispatch, username]);
 
-  const { user, ownerUserData, error } = useSelector((state) => state.users);
+  const { user, ownerUserData, error, status } = useSelector(
+    (state) => state.users
+  );
 
   useEffect(() => {
     if (user) {
