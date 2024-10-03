@@ -4,10 +4,16 @@ import Post from "@/components/Post/Post";
 import { Button } from "@/components/ui/button";
 import { fetchPosts } from "@/utils/postSlice";
 import useNotFollowingBack from "@/utils/useNotFollowingBack";
-import { fetchUserByUsername } from "@/utils/userSlice";
+import {
+  addFollowing,
+  fetchUserByUsername,
+  unFollowUser,
+  updateUserFollowing,
+} from "@/utils/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { SyncLoader } from "react-spinners";
 
 const Profile = () => {
   const { username } = useParams();
@@ -24,7 +30,7 @@ const Profile = () => {
     dispatch(fetchPosts());
   }, [dispatch, username]);
 
-  const { user, ownerUserData, error, status } = useSelector(
+  const { user, usersList, ownerUserData, error, status } = useSelector(
     (state) => state.users
   );
 
@@ -37,11 +43,20 @@ const Profile = () => {
 
   const isOwnProfile = username === ownerUserData.username;
 
-  // console.log(user);
-
   const usersPosts = posts.filter((post) => post.username === username);
 
-  // console.log(usersPosts);
+  const ownerUser =
+    usersList?.find((user) => user.username === ownerUserData.username) || [];
+
+  const whoToFollow = ownerUser
+    ? usersList?.filter(
+        (user) =>
+          user.username !== ownerUserData.username &&
+          !ownerUser.following.some(
+            (following) => following.username === user.username
+          )
+      )
+    : [];
 
   if (!user) return;
 
@@ -52,6 +67,37 @@ const Profile = () => {
   const handleFollowDialog = (dialogClick) => {
     setClickedOn(dialogClick);
     setIsFollowDialogOpen(true);
+  };
+
+  const followRequest = () => {
+    const newFollowRequest = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      avatarURL: user.avatarURL,
+    };
+    dispatch(
+      addFollowing({ userId: "66cf5b279f160ce5ef57dcd1", newFollowRequest })
+    );
+    dispatch(
+      updateUserFollowing({
+        id: "66cf5b279f160ce5ef57dcd1",
+        dataToUpdate: newFollowRequest,
+      })
+    );
+  };
+
+  const owner = usersList.find((profile) => profile.username === "Katherine");
+  const isFollowing = owner?.following.find(
+    (follow) => follow.username === user.username
+  );
+
+  const unFollowUserHandler = () => {
+    if (isFollowing) {
+      dispatch(unFollowUser({ userId: owner._id, followId: isFollowing?._id }));
+    } else {
+      console.log("User is not in the following list");
+    }
   };
 
   return (
@@ -68,15 +114,17 @@ const Profile = () => {
           >
             Edit Profile
           </button>
-        ) : !ownerUserData.following?.find(
-            (user) => user.username === username
-          ) ? (
-          <Button variant="secondary" className="py-6">
-            Follow
+        ) : isFollowing ? (
+          <Button
+            onClick={unFollowUserHandler}
+            variant="secondary"
+            className="py-6"
+          >
+            Following
           </Button>
         ) : (
-          <Button variant="secondary" className="py-6">
-            Following
+          <Button onClick={followRequest} variant="secondary" className="py-6">
+            Follow
           </Button>
         )}
       </div>
@@ -114,14 +162,18 @@ const Profile = () => {
           <span className="font-normal ml-1 text-gray-500">Followers</span>
         </p>
       </div>
-      {status !== "loading" ? (
+      {status === "loading" ? (
+        <div className="flex justify-center items-center min-h-screen -mt-20">
+          <SyncLoader size={20} color="#4A90E2" />
+        </div>
+      ) : usersPosts.length > 0 ? (
         usersPosts.map((post) => (
           <div key={post._id}>
             <Post postId={post._id} />
           </div>
         ))
       ) : (
-        <p>Loading...</p>
+        <p>No posts available.</p>
       )}
 
       <EditProfile

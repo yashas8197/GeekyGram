@@ -34,7 +34,10 @@ const Header = () => {
             size={25}
           />
         )}
-        <p className="hidden sm:inline-block ml-3 text-white cursor-pointer">
+        <p
+          onClick={() => navigate("/")}
+          className="hidden sm:inline-block ml-3 text-white cursor-pointer"
+        >
           Geeky<span className="text-[#39A7F2]">Gram</span>
         </p>
       </div>

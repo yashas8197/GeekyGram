@@ -25,12 +25,6 @@ const FollowDialog = ({
 
   const unFollowUserHandler = (id) => {
     dispatch(unFollowUser({ userId: user._id, followId: id }));
-
-    /* dispatch(
-      fetchUserByUsername(
-        currentUser === undefined ? ownerUserData.username : currentUser
-      )
-    ); */
   };
 
   const handleProfileClick = (username) => {

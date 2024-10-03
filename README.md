@@ -1,8 +1,35 @@
-# React + Vite
+# 🌟 GeekyGram
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A social media platform where users can post, explore, and engage with others!
 
-Currently, two official plugins are available:
+## 🚀 How to Install and Run Locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To get started with GeekyGram, follow these steps:
+
+```bash
+$ git clone https://github.com/yashas8197/GeekyGram.git
+$ cd GeekyGram
+$ npm install
+$ npm run dev
+```
+
+# ✨ Features
+
+- 📝 Feed Posts
+- ⬆️ Upload post in Cloudinary
+- 🔍 Explore & Trending Posts
+- ➕ Add, Update & Delete Post
+- 💬 Add, Update & Delete Comment
+- 🔁 Reply in Comments
+- 📚 Add/Delete Bookmark
+- 🛠️ User Profile Update
+- 🔔 Follow / Unfollow Users
+- 📱 Fully Responsive UI
+- 🔗 Share Post
+
+# Upcoming Features
+
+- 🔐 Authentication:
+  - 📝 User Signup
+  - 🔑 User Login
+  - 🚪 User Logout

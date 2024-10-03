@@ -59,7 +59,6 @@ export const updateUserProfile = createAsyncThunk(
       dataToUpdate
     );
 
-    console.log(response.data);
     return response.data;
   }
 );

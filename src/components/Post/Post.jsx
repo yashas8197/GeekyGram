@@ -82,7 +82,6 @@ const Post = ({ postId }) => {
     );
   };
 
-  // console.log(post);
   return (
     <div className="post border-[1px] border-y-gray-600 border-x-0">
       <div className="p-4">
@@ -220,16 +219,16 @@ const Post = ({ postId }) => {
                           <span className="text-gray-500">
                             @{comment.username}
                           </span>
-                          <span className="max-w-24  text-gray-500 ml-2 sm:max-w-24 md:inline-block hidden sm:overflow-ellipsis sm:whitespace-nowrap text-nowrap">
-                            date
+                          <span className="max-w-24 text-gray-500 ml-2 sm:max-w-24 md:inline-block hidden sm:overflow-ellipsis sm:whitespace-nowrap text-nowrap">
+                            {new Date(comment.createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
                           </span>
-                          {comment.username === ownerUserData.username && (
-                            <div className="comment-toolbar flex-grow relative text-right">
-                              <div className="edit">
-                                <i className="bi bi-three-dots"></i>
-                              </div>
-                            </div>
-                          )}
                         </div>
                         <div className="h-auto md:max-w-lg sm:max-w-sm break-words">
                           {comment.text}
@@ -237,9 +236,6 @@ const Post = ({ postId }) => {
                       </div>
                     </div>
                   ))}
-                </div>
-                <div className="w-full flex-grow">
-                  <div className="flex"></div>
                 </div>
               </div>
             </div>

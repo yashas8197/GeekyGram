@@ -5,6 +5,15 @@ import { fetchPosts } from "../utils/postSlice";
 import { fetchUsers } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import usePostForm from "@/utils/usePostForm";
+import { SyncLoader } from "react-spinners";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const initialFormState = {
   firstName: "Katherine",
@@ -19,6 +28,7 @@ const initialFormState = {
 
 const Home = () => {
   const { error, posts, status } = useSelector((post) => post.posts);
+  const [selectedOption, setSelectedOption] = useState("Latest");
   const user = useSelector((state) => state.users.usersList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,9 +60,31 @@ const Home = () => {
     }
   };
 
+  const handleSelect = (value) => {
+    setSelectedOption(value);
+  };
+
+  const sortedPosts = (allPosts, sortBy) => {
+    const postsCopy = [...allPosts];
+    if (sortBy === "Latest") {
+      return postsCopy.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+    }
+    if (sortBy === "Oldest") {
+      return postsCopy.sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      );
+    }
+    // Trending
+    return postsCopy.sort((a, b) => b.likes.likeCount - a.likes.likeCount);
+  };
+
+  const sortPosts = sortedPosts(filteredUsers, selectedOption);
+
   return (
     <div className="second space-y-10">
-      <div className="whatishapp flex gap-4">
+      <div className="whatishapp flex gap-4 border-[1px] border-y-gray-600 p-5 rounded-2xl">
         <div className="img m-2 w-16">
           <img
             className="mr-3 w-12 h-12 rounded-full object-cover"
@@ -73,10 +105,10 @@ const Home = () => {
             />
             <div>
               {postForm.mediaUrl && (
-                <div className="mb-3">
+                <div className="mb-3 w-3/4 h-1/2">
                   {postForm.mediaUrl.type === "video/mp4" ? (
                     <video
-                      className="w-25 rounded"
+                      className="w-3/4 rounded"
                       controls
                       autoPlay
                       muted
@@ -86,7 +118,7 @@ const Home = () => {
                     </video>
                   ) : (
                     <img
-                      className="w-25 rounded"
+                      className="w-1/2 rounded"
                       src={URL.createObjectURL(postForm.mediaUrl)}
                       alt="Preview"
                     />
@@ -120,9 +152,36 @@ const Home = () => {
           </form>
         </div>
       </div>
+      <div className="flex justify-between px-3">
+        <p>{selectedOption} Posts</p>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <i className="bi bi-sliders cursor-pointer"></i>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => handleSelect("Trending")}>
+              Trending
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSelect("Oldest")}>
+              Oldest
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSelect("Latest")}>
+              Latest
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div className="posts">
-        {filteredUsers.length !== 0 ? (
-          filteredUsers.map((post) => <Post key={post._id} postId={post._id} />)
+        {status === "loading" ? (
+          <div className="flex justify-center h-screen sm:w-full w-screen">
+            <SyncLoader size={20} color="#4A90E2" />
+          </div>
+        ) : sortPosts.length !== 0 ? (
+          sortPosts.map((post) => <Post key={post._id} postId={post._id} />)
         ) : (
           <p className="text-center text-gray-500 font-semibold">
             Your feed is empty. Follow people to fill it up!
