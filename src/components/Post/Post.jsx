@@ -167,7 +167,7 @@ const Post = ({ postId }) => {
               <i className="bi bi-share"></i>
             </div>
             <div
-              className={`icon flex items-center justify-center ${
+              className={`icon flex items-center justify-center cursor-pointer ${
                 isMarked === true ? "text-[#39A7F2]" : "text-gray-400"
               } `}
               onClick={() => handleBookMark(post._id, post)}
