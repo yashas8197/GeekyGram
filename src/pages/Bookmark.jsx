@@ -15,13 +15,14 @@ const Bookmark = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchData();
   }, [dispatch]);
 
   const bookMarkedPosts = posts.filter((post) => post.isMarked === true);
 
   return (
-    <div className="-mt-1">
+    <div className="sm:mb-0 mb-10 -mt-1">
       {initialRender && status === "loading" ? (
         <div className="flex justify-center h-screen sm:w-full w-screen mt-10">
           <SyncLoader size={20} color="#4A90E2" />

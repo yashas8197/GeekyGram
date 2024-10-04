@@ -16,7 +16,7 @@ const Discover = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const { usersList, ownerUserData, loading } = useSelector(
+  const { usersList, ownerUserData, status } = useSelector(
     (state) => state.users
   );
 
@@ -32,8 +32,6 @@ const Discover = () => {
           )
       )
     : [];
-
-  // console.log(whoToFollow);
 
   const followRequest = (user) => {
     try {
@@ -53,23 +51,6 @@ const Discover = () => {
           dataToUpdate: newFollowRequest,
         })
       );
-
-      /* dispatch(
-          updateUserFollowers({ id: user._id, dataToUpdate: ownerUserData })
-        ); */
-
-      /* dispatch(
-        updateUserFollowers({
-          id: user._id,
-          dataToUpdate: {
-            firstName: "Katherine",
-            lastName: "Brundage",
-            username: "Katherine",
-            avatarURL:
-              "https://res.cloudinary.com/darwtgzlk/image/upload/w_400,f_auto,q_auto/v1686251367/socialMedia/profilePictures/user1_wla0x2.jpg",
-          },
-        })
-      ); */
     } catch (error) {
       console.error("Error following user:", error);
     }
@@ -95,14 +76,18 @@ const Discover = () => {
                 />
               </div>
               <div
-                className="p2"
+                className="cursor-pointer"
                 onClick={() => navigate(`/profile/${user.username}`)}
               >
-                <p className="ont-semibold text-base sm:text-xs md:text-sm">
-                  {user.firstName} {user.lastName}
+                <p className="font-semibold text-base sm:text-sm md:text-sm truncate md:w-20 xl:w-20">
+                  <span>{user.firstName}</span>{" "}
+                  <span className="truncate">{user.lastName}</span>
                 </p>
-                <p className="text-gray-500">@{user.username}</p>
+                <p className="text-gray-500 truncate md:w-20 xl:w-20">
+                  @{user.username}
+                </p>
               </div>
+
               <div className="p3 flex-grow text-right">
                 <button
                   onClick={() => followRequest(user)}

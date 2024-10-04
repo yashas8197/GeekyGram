@@ -37,6 +37,7 @@ const Profile = () => {
   }, [user]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchUserByUsername(username));
     dispatch(fetchPosts());
   }, [dispatch, username, user?.avatarURL]);
