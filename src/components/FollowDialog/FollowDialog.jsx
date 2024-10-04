@@ -44,7 +44,7 @@ const FollowDialog = ({
           </DialogHeader>
           <div className="">
             <div className="">
-              <div className="p-4">
+              <div className="sm:p-4">
                 {usersToDisplay?.length ? (
                   usersToDisplay.map((follow) => (
                     <div
