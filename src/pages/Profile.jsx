@@ -25,11 +25,6 @@ const Profile = () => {
 
   const { posts } = useSelector((post) => post.posts);
 
-  useEffect(() => {
-    dispatch(fetchUserByUsername(username));
-    dispatch(fetchPosts());
-  }, [dispatch, username]);
-
   const { user, usersList, ownerUserData, error, status } = useSelector(
     (state) => state.users
   );
@@ -41,22 +36,14 @@ const Profile = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    dispatch(fetchUserByUsername(username));
+    dispatch(fetchPosts());
+  }, [dispatch, username, user?.avatarURL]);
+
   const isOwnProfile = username === ownerUserData.username;
 
   const usersPosts = posts.filter((post) => post.username === username);
-
-  const ownerUser =
-    usersList?.find((user) => user.username === ownerUserData.username) || [];
-
-  const whoToFollow = ownerUser
-    ? usersList?.filter(
-        (user) =>
-          user.username !== ownerUserData.username &&
-          !ownerUser.following.some(
-            (following) => following.username === user.username
-          )
-      )
-    : [];
 
   if (!user) return;
 

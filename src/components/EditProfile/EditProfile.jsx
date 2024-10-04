@@ -22,7 +22,6 @@ const EditProfile = ({ isDialogOpen, setIsDialogOpen, user }) => {
   const [profileAvatar, setProfileAvatar] = useState(user?.avatarURL);
   const [profileBio, setProfileBio] = useState(user?.bio);
   const [profileWebsite, setProfileWebsite] = useState(user?.website);
-  const [clickedOn, setClickedOn] = useState("");
   const dispatch = useDispatch();
 
   const saveProfile = async () => {
@@ -48,8 +47,17 @@ const EditProfile = ({ isDialogOpen, setIsDialogOpen, user }) => {
     }
   };
 
-  const handleUpload = (url) => {
-    setProfileAvatar(url);
+  const handleMediaInput = (e) => {
+    const file = e.target.files[0];
+    if (file?.type.startsWith("image/") || file.type.startsWith("video/")) {
+      if (file.size < 20 * 1024 * 1024) {
+        handleUpload(file);
+      } else {
+        console.error("file must be less than 20mb");
+      }
+    } else {
+      console.error("file must be a Video (MP4/MOV) or an Image (JPEG/PNG)");
+    }
   };
 
   return (
@@ -78,9 +86,7 @@ const EditProfile = ({ isDialogOpen, setIsDialogOpen, user }) => {
               src={profileAvatar}
               alt="User Avatar"
             />
-            <div className="absolute bottom-0 right-0 m-1 cursor-pointer">
-              <button className="rounded px-2 py-1">Upload</button>
-            </div>
+            <div className="absolute bottom-0 right-0 m-1 cursor-pointer"></div>
           </div>
           <div className="my-2">
             <p className=" m-0">

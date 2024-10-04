@@ -10,8 +10,6 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const { error, currentPost, status } = useSelector((post) => post.posts);
 
-  // console.log(postId);
-
   useEffect(() => {
     dispatch(resetCurrentPost());
     dispatch(fetchPostById(postId));
@@ -19,10 +17,8 @@ const PostDetails = () => {
 
   if (currentPost === null) return null;
 
-  // console.log(currentPost);
-
   return (
-    <div>
+    <div className="sm:mb-0 mb-10 -mt-4">
       {status === "loading" && <div className="text-center"></div>}
       {status === "error" && (
         <div className="alert alert-danger">Error: {error}</div>

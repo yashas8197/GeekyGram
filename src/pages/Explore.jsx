@@ -1,19 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../utils/postSlice";
 import Post from "../components/Post/Post";
 import { SyncLoader } from "react-spinners";
 
 const Explore = () => {
+  const [initialRender, setInitialRender] = useState(false);
   const dispatch = useDispatch();
   const { error, posts, status } = useSelector((post) => post.posts);
 
-  useEffect(() => {
+  const fetchData = async () => {
     dispatch(fetchPosts());
+    setInitialRender(false);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [dispatch]);
   return (
     <div>
-      {status === "loading" ? (
+      {initialRender && status === "loading" ? (
         <div className="flex justify-center h-screen sm:w-full mt-10 w-screen">
           <SyncLoader size={20} color="#4A90E2" />
         </div>

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PostToolBar from "../PostToolBar/PostToolBar";
+import { getTimeAgo } from "@/utils/getTimeAgo";
 
 const Post = ({ postId }) => {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ const Post = ({ postId }) => {
             </span>
             <span className="text-gray-500 hidden sm:inline">
               {" "}
-              @{post.username} . 6h
+              @{post.username} . {getTimeAgo(post.createdAt)}
             </span>
             <p className="md:max-w-2xl">{post.content}</p>
           </div>

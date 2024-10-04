@@ -1,22 +1,28 @@
 import Post from "@/components/Post/Post";
 import { fetchPosts } from "@/utils/postSlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 
 const Bookmark = () => {
+  const [initialRender, setInitialRender] = useState(false);
   const dispatch = useDispatch();
   const { error, posts, status } = useSelector((post) => post.posts);
 
-  useEffect(() => {
+  const fetchData = async () => {
     dispatch(fetchPosts());
+    setInitialRender(false);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [dispatch]);
 
   const bookMarkedPosts = posts.filter((post) => post.isMarked === true);
 
   return (
     <div className="-mt-1">
-      {status === "loading" ? (
+      {initialRender && status === "loading" ? (
         <div className="flex justify-center h-screen sm:w-full w-screen mt-10">
           <SyncLoader size={20} color="#4A90E2" />
         </div>

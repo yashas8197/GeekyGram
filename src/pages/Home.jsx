@@ -29,14 +29,19 @@ const initialFormState = {
 const Home = () => {
   const { error, posts, status } = useSelector((post) => post.posts);
   const [selectedOption, setSelectedOption] = useState("Latest");
+  const [initialRender, setInitialRender] = useState(false);
   const user = useSelector((state) => state.users.usersList);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { postForm, handleUpload, handleChange, handleSubmit, resetForm } =
     usePostForm(initialFormState);
-  useEffect(() => {
+  const fetchData = async () => {
     dispatch(fetchPosts());
     dispatch(fetchUsers());
+    setInitialRender(false);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [dispatch]);
 
   const userFollowing = (
@@ -176,7 +181,7 @@ const Home = () => {
         </DropdownMenu>
       </div>
       <div className="posts">
-        {status === "loading" ? (
+        {initialRender && status === "loading" ? (
           <div className="flex justify-center h-screen sm:w-full w-screen">
             <SyncLoader size={20} color="#4A90E2" />
           </div>
