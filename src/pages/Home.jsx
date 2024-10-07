@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "../utils/postSlice";
 import { fetchUsers } from "../utils/userSlice";
-import { SyncLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 import SortPostsDropdown from "@/components/SortPostsDropdown/SortPostsDropdown";
 import CreatePostForm from "@/components/CreatePostForm/CreatePostForm";
 
@@ -65,7 +65,7 @@ const Home = () => {
         <div className="posts">
           {initialRender && status === "loading" ? (
             <div className="flex justify-center h-screen sm:w-full w-screen">
-              <SyncLoader size={20} color="#4A90E2" />
+              <CircleLoader size={20} color="#4A90E2" />
             </div>
           ) : sortPosts.length !== 0 ? (
             sortPosts.map((post) => <Post key={post._id} postId={post._id} />)

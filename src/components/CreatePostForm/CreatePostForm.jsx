@@ -29,7 +29,7 @@ const CreatePostForm = () => {
   };
 
   return (
-    <div className="whatishapp flex gap-4 border-[1px] border-y-gray-600 p-5 rounded-2xl">
+    <div className="whatishapp flex gap-4 border-[1px] border-y-gray-800 p-5 rounded-2xl">
       <div className="img m-2 w-16">
         <img
           className="mr-3 w-12 h-12 rounded-full object-cover"
@@ -46,14 +46,20 @@ const CreatePostForm = () => {
           />
           <div>
             {postForm.mediaUrl && (
-              <div className="mb-3 w-3/4 h-1/2">
+              <div className="mb-3 h-1/2">
                 {postForm.mediaUrl.type === "video/mp4" ? (
-                  <video className="w-3/4 rounded" controls autoPlay muted loop>
+                  <video
+                    className="w-full h-full object-cover rounded"
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                  >
                     <source src={URL.createObjectURL(postForm.mediaUrl)} />
                   </video>
                 ) : (
                   <img
-                    className="w-1/2 rounded"
+                    className="w-full h-full object-cover rounded"
                     src={URL.createObjectURL(postForm.mediaUrl)}
                     alt="Preview"
                   />

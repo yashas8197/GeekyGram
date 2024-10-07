@@ -2,7 +2,7 @@ import Post from "@/components/Post/Post";
 import { fetchPosts } from "@/utils/postSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SyncLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 
 const Bookmark = () => {
   const [initialRender, setInitialRender] = useState(false);
@@ -22,10 +22,10 @@ const Bookmark = () => {
   const bookMarkedPosts = posts.filter((post) => post.isMarked === true);
 
   return (
-    <div className="sm:mb-0 mb-10 -mt-1">
+    <div className="sm:mb-0 mb-10">
       {initialRender && status === "loading" ? (
         <div className="flex justify-center h-screen sm:w-full w-screen mt-10">
-          <SyncLoader size={20} color="#4A90E2" />
+          <CircleLoader size={20} color="#4A90E2" />
         </div>
       ) : (
         <>

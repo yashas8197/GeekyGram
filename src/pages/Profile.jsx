@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SyncLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 
 const Profile = () => {
   const { username } = useParams();
@@ -100,7 +100,7 @@ const Profile = () => {
       />
       {status === "loading" ? (
         <div className="flex justify-center items-center min-h-screen -mt-20">
-          <SyncLoader size={20} color="#4A90E2" />
+          <CircleLoader size={20} color="#4A90E2" />
         </div>
       ) : usersPosts.length > 0 ? (
         usersPosts

@@ -84,7 +84,7 @@ const Post = ({ postId }) => {
   };
 
   return (
-    <div className="post border-[1px] border-y-gray-600 border-x-0">
+    <div className="post border-[1px] border-y-gray-800 border-x-gray-800">
       <div className="p-4">
         <div className="flex">
           <div className="image my-4 ml-2 w-16 min-w-[4rem] h-8">
@@ -103,10 +103,9 @@ const Post = ({ postId }) => {
               {post.firstName} {post.lastName}
             </span>
             <span className="text-gray-500 hidden sm:inline">
-              {" "}
               @{post.username} . {getTimeAgo(post.createdAt)}
             </span>
-            <p className="md:max-w-2xl">{post.content}</p>
+            <p className="md:max-w-lg">{post.content}</p>
           </div>
           {post.username === ownerUserData.username && (
             <div className="post-toolbar flex-grow relative text-right">
@@ -114,9 +113,9 @@ const Post = ({ postId }) => {
             </div>
           )}
         </div>
-        <div className="inline">
+        <div className="">
           <div
-            className="sm:max-w-sm md:w-[25rem] px-4 cursor-pointer"
+            className="w-[80%] mx-auto px-4 cursor-pointer"
             onClick={() => navigate(`/post-details/${post._id}`)}
           >
             {post.mediaUrl && (
@@ -129,7 +128,7 @@ const Post = ({ postId }) => {
                   />
                 ) : (
                   <video
-                    className="w-full rounded-lg object-cover"
+                    className="w-3/4 rounded-lg object-cover"
                     controls
                     muted
                     loop
@@ -141,7 +140,7 @@ const Post = ({ postId }) => {
             )}
           </div>
 
-          <div className="icons flex md:w-[25rem] justify-evenly text-gray-700">
+          <div className="icons mx-auto flex md:w-[max-w-xl] justify-evenly text-gray-700">
             <div
               className={`icon flex items-center justify-center cursor-pointer ${
                 showComment ? "text-[#39A7F2]" : ""
