@@ -10,6 +10,7 @@ import { deletePostApi, setPost } from "@/utils/postSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { EditPostDialog } from "../EditPostDialog/EditPostDialog";
+import { toast } from "@/hooks/use-toast";
 
 const PostToolBar = ({ post }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -34,7 +35,16 @@ const PostToolBar = ({ post }) => {
           <DropdownMenuItem onClick={() => editPost(post)}>
             Edit Post
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => dispatch(deletePostApi(post._id))}>
+          <DropdownMenuItem
+            onClick={() => {
+              dispatch(deletePostApi(post._id));
+              toast({
+                description: "Post Deleted Successfully",
+                variant: "destructive",
+                duration: 900,
+              });
+            }}
+          >
             Delete Post
           </DropdownMenuItem>
         </DropdownMenuContent>

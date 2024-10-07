@@ -4,17 +4,22 @@ import {
   updateUserFollowers,
   updateUserFollowing,
 } from "@/utils/userSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 
 const Discover = () => {
+  const [initialRender, setInitialRender] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    const fetchData = async () => {
+      await dispatch(fetchUsers());
+      setInitialRender(false);
+    };
+    fetchData();
   }, [dispatch]);
 
   const { usersList, ownerUserData, status } = useSelector(
@@ -56,11 +61,16 @@ const Discover = () => {
       console.error("Error following user:", error);
     }
   };
-  return status === "loading" ? (
-    <div className="flex justify-center py-5">
-      <CircleLoader color="#4A90E2" size={30} />
-    </div>
-  ) : (
+
+  if (status === "loading" && initialRender) {
+    return (
+      <div className="flex justify-center py-5">
+        <CircleLoader color="#4A90E2" size={30} />
+      </div>
+    );
+  }
+
+  return (
     <div className="who mt-6 sticky top-20 mx-3 bg-[#16181c] xl:w-3/4 w-full py-5 rounded-xl space-y-1">
       <h1 className="text-xl font-bold px-3">Who to follow?</h1>
       <div className="overflow-y-auto" style={{ maxHeight: "400px" }}>
@@ -95,7 +105,7 @@ const Discover = () => {
               <div className="p3 flex-grow text-right">
                 <button
                   onClick={() => followRequest(user)}
-                  className="px-3 py-2 bg-gray-200 text-black rounded-full font-semibold"
+                  className="px-3 py-2 float-end sm:hidden lg:block bg-gray-200 text-black rounded-full font-semibold"
                 >
                   Follow
                 </button>

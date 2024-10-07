@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createPost } from "./postSlice";
+import { useToast } from "@/hooks/use-toast";
 
 const usePostForm = (initialFormState) => {
+  const { toast } = useToast();
   const [postForm, setPostForm] = useState(initialFormState);
   const dispatch = useDispatch();
 
   const handleUpload = (file) => {
-    setPostForm((prev) => ({
-      ...prev,
-      mediaUrl: file,
-      type: file?.type.includes("image/") ? "image" : "video",
-    }));
+    if (file === "") {
+      setPostForm((prev) => ({
+        ...prev,
+        mediaUrl: "",
+        type: "",
+      }));
+    } else {
+      setPostForm((prev) => ({
+        ...prev,
+        mediaUrl: file,
+        type: file?.type.includes("image/") ? "image" : "video",
+      }));
+    }
   };
 
   const handleChange = (e) => {
@@ -42,6 +52,11 @@ const usePostForm = (initialFormState) => {
     formData.append("type", postForm.type);
 
     dispatch(createPost({ dataToUpload: formData }));
+    toast({
+      description: "✅ Post Created Successfully",
+      variant: "default",
+      duration: 900,
+    });
     resetForm();
   };
 

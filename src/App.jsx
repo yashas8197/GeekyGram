@@ -27,7 +27,7 @@ function App() {
             <div className="second lg:w-3/4 border border-x-black border-y-black space-y-10">
               <Outlet />
             </div>
-            <div className="third  lg:w-1/2 lg:block hidden">
+            <div className="third lg:w-1/2 md:block hidden">
               <Discover />
             </div>
           </div>

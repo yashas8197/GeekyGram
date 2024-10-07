@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
-import { CircleLoader } from "react-spinners";
 
 const ProfileDetailsCard = ({
   user,
@@ -15,13 +14,6 @@ const ProfileDetailsCard = ({
   const { ownerUserData, status } = useSelector((state) => state.users);
 
   const isOwnProfile = username === ownerUserData.username;
-  if (status === "loading") {
-    return (
-      <div className="flex justify-center items-center">
-        <CircleLoader size={20} color="#3b82f6" />
-      </div>
-    );
-  }
   return (
     <div>
       <div className="profileDetails flex  items-center p-4 justify-between mb-4">

@@ -21,11 +21,24 @@ const CreatePostForm = () => {
       if (file.size < 20 * 1024 * 1024) {
         handleUpload(file);
       } else {
-        console.error("file must be less than 20mb");
+        toast({
+          description: "file must be less than 20mb",
+          variant: "default",
+          duration: 900,
+        });
       }
     } else {
-      console.error("file must be a Video (MP4/MOV) or an Image (JPEG/PNG)");
+      toast({
+        description: "file must be an Image (JPEG/PNG)",
+        variant: "default",
+        duration: 900,
+      });
     }
+  };
+
+  const handleRemoveImage = () => {
+    const reset = "";
+    handleUpload(reset);
   };
 
   return (
@@ -46,7 +59,7 @@ const CreatePostForm = () => {
           />
           <div>
             {postForm.mediaUrl && (
-              <div className="mb-3 h-1/2">
+              <div className="mb-3 h-1/2 relative">
                 {postForm.mediaUrl.type === "video/mp4" ? (
                   <video
                     className="w-full h-full object-cover rounded"
@@ -64,6 +77,12 @@ const CreatePostForm = () => {
                     alt="Preview"
                   />
                 )}
+                <div className="">
+                  <i
+                    onClick={handleRemoveImage}
+                    className="bi bi-x absolute top-1 cursor-pointer  right-1 rounded-full px-1 bg-black"
+                  ></i>
+                </div>
               </div>
             )}
 

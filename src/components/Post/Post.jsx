@@ -26,6 +26,14 @@ const Post = ({ postId }) => {
   const [localComments, setLocalComments] = useState(post?.comments || []);
   const [isMarked, setIsMarked] = useState(post?.isMarked);
 
+  const likedAlready = post?.likes?.likedBy?.find(
+    (user) => user.username === ownerUserData.username
+  );
+
+  const [isLiked, setIsLiked] = useState(
+    likedAlready?.username.includes("Katherine")
+  );
+
   const handleProfileClick = (username) => {
     navigate(`/profile/${username}`);
   };
@@ -46,10 +54,6 @@ const Post = ({ postId }) => {
     setShowComment((prevPostId) => (prevPostId === postId ? null : postId));
   };
 
-  const likedAlready = post?.likes?.likedBy?.find(
-    (user) => user.username === ownerUserData.username
-  );
-
   const handleLike = (postId) => {
     const dataToUpdate = {
       firstName: ownerUserData.firstName,
@@ -57,6 +61,7 @@ const Post = ({ postId }) => {
       username: ownerUserData.username,
       avatarURL: ownerUserData.avatarURL,
     };
+    setIsLiked((prevIsLiked) => !prevIsLiked);
     dispatch(likeThePost({ postId, username: ownerUserData.username }));
     dispatch(likePost({ postId, dataToUpdate: dataToUpdate }));
   };
@@ -115,7 +120,7 @@ const Post = ({ postId }) => {
         </div>
         <div className="">
           <div
-            className="w-[80%] mx-auto px-4 cursor-pointer"
+            className="sm:w-[80%] sm:mx-auto px-4 cursor-pointer"
             onClick={() => navigate(`/post-details/${post._id}`)}
           >
             {post.mediaUrl && (
@@ -128,7 +133,7 @@ const Post = ({ postId }) => {
                   />
                 ) : (
                   <video
-                    className="w-3/4 rounded-lg object-cover"
+                    className="sm:w-3/4 rounded-lg object-cover"
                     controls
                     muted
                     loop
@@ -151,9 +156,7 @@ const Post = ({ postId }) => {
             </div>
             <div
               className={`icon flex items-center justify-center cursor-pointer ${
-                likedAlready?.username.includes("Katherine")
-                  ? "text-[#39A7F2]"
-                  : "text-gray-400"
+                isLiked ? "text-[#39A7F2]" : "text-gray-400"
               }`}
               onClick={() => handleLike(post._id)}
             >

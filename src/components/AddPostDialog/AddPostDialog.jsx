@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import usePostForm from "@/utils/usePostForm";
+import { toast } from "@/hooks/use-toast";
 
 const initialFormState = {
   firstName: "Katherine",
@@ -27,24 +28,35 @@ export const AddPostDialog = ({ isDialogOpen, setIsDialogOpen }) => {
 
   const handleMediaInput = (e) => {
     const file = e.target.files[0];
-    if (file?.type.startsWith("image/") || file.type.startsWith("video/")) {
+    if (file?.type.startsWith("image/")) {
       if (file.size < 20 * 1024 * 1024) {
         handleUpload(file);
       } else {
-        console.error("file must be less than 20mb");
+        toast({
+          description: "file must be less than 20mb",
+          variant: "default",
+          duration: 900,
+        });
       }
     } else {
-      console.error("file must be a Video (MP4/MOV) or an Image (JPEG/PNG)");
+      toast({
+        description: "file must be an Image (JPEG/PNG)",
+        variant: "default",
+        duration: 900,
+      });
     }
+  };
+
+  const handleRemoveImage = () => {
+    const reset = "";
+    handleUpload(reset);
   };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogContent className="p-6">
+      <DialogContent className="p-6 overflow-y-auto max-h-[80vh]">
         <DialogHeader>
-          <DialogTitle className="sm:text-start text-center">
-            New Post
-          </DialogTitle>
+          <DialogTitle className="text-center">New Post</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
@@ -72,7 +84,7 @@ export const AddPostDialog = ({ isDialogOpen, setIsDialogOpen }) => {
             ></textarea>
           </div>
           {postForm.mediaUrl && (
-            <div className="">
+            <div className="relative">
               {postForm.mediaUrl.type.startsWith("video/") ? (
                 <video className="w-25 rounded" controls autoPlay muted loop>
                   <source src={URL.createObjectURL(postForm.mediaUrl)} />
@@ -84,6 +96,12 @@ export const AddPostDialog = ({ isDialogOpen, setIsDialogOpen }) => {
                   alt="Preview"
                 />
               )}
+              <div className="">
+                <i
+                  onClick={handleRemoveImage}
+                  className="bi bi-x absolute top-1 cursor-pointer  right-1 rounded-full px-1 bg-black"
+                ></i>
+              </div>
             </div>
           )}
         </div>
@@ -100,7 +118,10 @@ export const AddPostDialog = ({ isDialogOpen, setIsDialogOpen }) => {
             />
           </label>
           <button
-            onClick={(e) => handleSubmit(e, resetForm)}
+            onClick={(e) => {
+              handleSubmit(e, resetForm);
+              setIsDialogOpen(false);
+            }}
             disabled={!postForm.content}
             className={`bg-[#39A7F2] px-4 font-bold mx-5 text-sm rounded-full py-2  text-white ${
               !postForm.content && "cursor-not-allowed"
