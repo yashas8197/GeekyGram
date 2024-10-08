@@ -20,14 +20,14 @@ function App() {
         <div className="flex flex-col min-h-screen mx-auto w-full">
           <div className="flex-grow flex">
             <div className="first sm:w-20 xl:w-[30%] md:w-[10%]">
-              <div className="sidebar  flex sm:flex-row md:items-end md:flex-col sticky top-24 z-10">
+              <div className="sidebar  flex sm:flex-row md:items-end md:flex-col sticky top-24 xl:mr-10 z-10">
                 <NavBar />
               </div>
             </div>
             <div className="second lg:w-3/4 border border-x-black border-y-black space-y-10">
               <Outlet />
             </div>
-            <div className="third lg:w-1/2 md:block hidden">
+            <div className="third lg:w-1/2 hidden lg:block">
               <Discover />
             </div>
           </div>

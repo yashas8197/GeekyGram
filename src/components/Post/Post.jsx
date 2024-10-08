@@ -107,7 +107,7 @@ const Post = ({ postId }) => {
             >
               {post.firstName} {post.lastName}
             </span>
-            <span className="text-gray-500 hidden sm:inline">
+            <span className="text-gray-500 mx-2 hidden sm:inline">
               @{post.username} . {getTimeAgo(post.createdAt)}
             </span>
             <p className="md:max-w-lg">{post.content}</p>

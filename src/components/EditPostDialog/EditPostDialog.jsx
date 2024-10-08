@@ -80,24 +80,16 @@ export function EditPostDialog({ isDialogOpen, setIsDialogOpen }) {
                 onChange={(e) => setUpdatedContent(e.target.value)}
               ></textarea>
             </div>
-
-            <span>Upload</span>
           </form>
 
           {mediaUrl && (
-            <div className="mb-3 w-3/4">
+            <div className="mb-3">
               {type === "video" ? (
-                <video
-                  className="w-1/2 h-3/4 rounded"
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                >
+                <video className=" h-3/4 rounded" controls autoPlay muted loop>
                   <source src={mediaUrl} />
                 </video>
               ) : (
-                <img className="w-1/2 rounded" src={mediaUrl} alt="Preview" />
+                <img className=" rounded" src={mediaUrl} alt="Preview" />
               )}
             </div>
           )}

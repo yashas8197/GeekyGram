@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 z-20 bg-black p-[2rem] pl-[4.2vw] flex items-center  font-semibold h-[10vh]">
-      <div className="logo flex justify-center xl:ml-12 text-2xl ">
+      <div className="logo flex justify-center text-2xl ">
         {swing ? (
           <AttentionSeeker effect="swing">
             <LuBird
