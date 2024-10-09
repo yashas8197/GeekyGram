@@ -8,6 +8,6 @@ export function getTimeAgo(createdAt) {
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
   if (diffInMinutes < 60) return `${diffInMinutes}m`;
-  if (diffInHours < 24) return `${diffInHours * Math.random()}h`;
+  if (diffInHours < 24) return `${diffInHours}h`;
   return `${diffInDays}d`;
 }
